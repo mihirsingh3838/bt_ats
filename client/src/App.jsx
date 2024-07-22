@@ -1,14 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Login from './Admin/Pages/Login/Login';
-import Header from './Admin/components/Header';
-import Footer from './Admin/components/Footer';
-import Dashboard from './Admin/Pages/Dahboard';
-import RegistrationForm from './Admin/Pages/Registration/Registration';
+import Login from './Login_Page/Login';
+
+import Dashboard from './Admin/Pages/AdminDashboard';
+import RegistrationForm from './Admin/Pages/Registration';
 import EmployeeDashboard from './Employee/Pages/EmployeeDashboard';
 
-const AppLayout = ({ children }) => {
+/*const AppLayout = ({ children }) => {
   return (
     <div className="App">
       <Header />
@@ -20,7 +19,7 @@ const AppLayout = ({ children }) => {
       <Footer />
     </div>
   );
-};
+};*/
 
 function App() {
   return (
@@ -28,8 +27,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<AppLayout><RegistrationForm /></AppLayout>} />
-        <Route path="/dashboard" element={<AppLayout><Dashboard /></AppLayout>} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
       </Routes>
     </Router>

@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { FaHome, FaCameraRetro } from "react-icons/fa";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
-import Camera from "./Camera"; // Import the Camera component
+import Camera from "./Camera";
 
-Modal.setAppElement('#root'); // Set the root element for accessibility
+Modal.setAppElement('#root');
 
 const Sidebar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [capturedData, setCapturedData] = useState(null);
 
   const handleSetActive = (link) => {
     setActiveLink(link);
@@ -21,6 +22,10 @@ const Sidebar = () => {
   const closeModal = () => {
     setModalIsOpen(false);
     setActiveLink("home");
+  };
+
+  const handleCapture = (data) => {
+    setCapturedData(data);
   };
 
   return (
@@ -57,11 +62,19 @@ const Sidebar = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Camera Modal"
-        className="flex flex-col items-center justify-center bg-white rounded-lg shadow-lg p-6 mx-auto my-20 w-full max-w-md"
+        className="flex flex-col md:flex-row items-center justify-center bg-white rounded-lg shadow-lg p-6 mx-auto my-20 w-full max-w-4xl"
         overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
       >
-        <Camera />
-        <button onClick={closeModal} className="bg-red-600 text-white p-2 rounded-lg mt-4">
+        <Camera onCapture={handleCapture} />
+        {capturedData && (
+          <div className="flex flex-col items-center mt-4 md:mt-0 md:ml-6">
+            <img src={capturedData.image} alt="Captured" className="w-64 rounded-lg" />
+            <p className="mt-2">Timestamp: {capturedData.timestamp}</p>
+            <p>Latitude: {capturedData.latitude}</p>
+            <p>Longitude: {capturedData.longitude}</p>
+          </div>
+        )}
+        <button onClick={closeModal} className="bg-red-600 text-white p-2 rounded-lg mt-4 md:mt-0 md:ml-6">
           Close
         </button>
       </Modal>
